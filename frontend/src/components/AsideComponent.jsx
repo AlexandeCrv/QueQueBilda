@@ -10,7 +10,7 @@ const AsideComponent = ({ datas, getProfileIconPath }) => {
   return (
     <aside className="bg-bandeira w-48 h-5/6 absolute left-10 z-10">
       <div className="seta-voltar">
-        <Link to="/Que-Que-Bilda">
+        <Link to="/QueQueBilda">
           <button className="botao-procura">
             <VscArrowLeft
               style={{
