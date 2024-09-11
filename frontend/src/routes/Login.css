@@ -1,0 +1,205 @@
+.login {
+  display: flex;
+  justify-content: space-between;
+}
+.aba-esquerda {
+  background-color: #fcfcfc;
+  width: 336px;
+  height: 624px;
+}
+
+.figure-logo {
+  width: 336px;
+  text-align: center;
+}
+.logo {
+  width: 200px;
+  margin: auto;
+}
+.logoroda {
+  width: 100px;
+  position: absolute;
+  left: 120px;
+  top: 30px;
+}
+.label-h1 {
+  text-align: center;
+  font-size: 25px;
+}
+.label-float {
+  position: relative;
+  padding-top: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.inpt {
+  padding: 15px;
+}
+
+.label-float input {
+  border: 0;
+  border-bottom: 2px solid lightgrey;
+
+  outline: none;
+  min-width: 180px;
+  font-size: 16px;
+  transition: all 0.1s ease-out;
+  -webkit-transition: all 0.1s ease-out;
+  -moz-transition: all 0.1s ease-out;
+
+  border-radius: 0;
+}
+
+.label-float input:focus {
+  border-bottom: 2px solid #3951b2;
+}
+
+.label-float input::placeholder {
+  color: transparent;
+}
+
+.label-float label {
+  pointer-events: none;
+  position: absolute;
+  top: 10px;
+  left: 60px;
+  margin-top: 13px;
+  transition: all 0.1s ease-out;
+  -webkit-transition: all 0.1s ease-out;
+  -moz-transition: all 0.1s ease-out;
+}
+
+.label-float input:required:invalid + label {
+  color: red;
+}
+.label-float input:focus:required:invalid {
+  border-bottom: 2px solid red;
+}
+.label-float input:required:invalid + label:before {
+  content: "*";
+}
+.label-float input:focus + label,
+.label-float input:not(:placeholder-shown) + label {
+  font-size: 13px;
+  margin-top: 0;
+  color: #3951b2;
+}
+.classe-botao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+  height: 100px;
+}
+.loading-spinner {
+  border: 2px solid #f3f3f3; /* Light grey */
+  border-top: 2px solid #3951b2; /* Primary color */
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+.loading-spinnerhist {
+  border: 2px solid #f3f3f3; /* Light grey */
+  border-top: 2px solid #3951b2; /* Primary color */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.botao-procura {
+  width: 50px;
+  height: 50px;
+  border-radius: 13px;
+}
+
+.botao-procura.inactive {
+  background-color: #f3f3f3;
+  cursor: not-allowed;
+}
+
+.botao-procura.active {
+  background-color: #3951b2;
+  cursor: pointer;
+}
+.criar-conta {
+  color: #3951b2;
+
+  font-size: 15px;
+  height: 30px;
+}
+.label-criar-conta {
+  font-size: 10px;
+  color: #a3a3a3;
+  margin: auto;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 12px;
+}
+
+.fundo-login {
+  background-image: url(../assets/funfoperfil.png);
+  background-size: cover;
+  width: 100%;
+}
+
+.cor-de-fundo-historico {
+  background-color: rgba(0, 0, 0, 0.329);
+}
+.champion-container {
+  width: 500px; /* Ajuste conforme necessário */
+  height: 250px; /* Ajuste conforme necessário */
+  border: 2px solid #785a28;
+  background-color: #a3a3a33b;
+  display: flex;
+  align-items: center;
+  font-size: 5px;
+  color: white;
+}
+
+.champion-image {
+  width: 100px; /* Ajuste conforme necessário */
+  height: 100px; /* Ajuste conforme necessário */
+}
+
+.item-image {
+  width: 30px; /* Ajuste conforme necessário */
+  height: 30px; /* Ajuste conforme necessário */
+}
+
+.item-images {
+  flex-wrap: wrap;
+}
+.flex {
+  display: flex;
+  font-size: 15px;
+}
+
+.items-center {
+  align-items: center;
+
+  font-size: 15px;
+}
+
+.ml-4 {
+  margin-left: 1rem;
+}
+
+.ml-6 {
+  margin-left: 1.5rem;
+}
