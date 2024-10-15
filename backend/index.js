@@ -136,6 +136,20 @@ app.get("/champ", async (req, res) => {
     res.status(error.response?.status || 500).json({ message: error.message });
   }
 });
+app.get("/augument", async (req, res) => {
+  console.log("Request received for /match/:matchId");
+  const { matchId } = req.params;
+
+  try {
+    const response = await axios.get(
+      `https://raw.communitydragon.org/13.16/cdragon/arena/en_us.json`
+    );
+
+    res.json(response.data);
+  } catch (error) {
+    res.status(error.response?.status || 500).json({ message: error.message });
+  }
+});
 app.get("/icon", async (req, res) => {
   console.log("Request received for /icon");
   try {

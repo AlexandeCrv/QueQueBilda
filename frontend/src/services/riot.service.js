@@ -98,6 +98,15 @@ export const getspells = async () => {
     throw error;
   }
 };
+export const getaugument = async () => {
+  try {
+    const response = await api.get(`/augument`);
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao itens:", error);
+    throw error;
+  }
+};
 
 export const faztudo = async (name, tag) => {
   let data = {};
@@ -109,6 +118,7 @@ export const faztudo = async (name, tag) => {
     data.icon = await geticon();
     data.itens = await getitens();
     data.spells = await getspells();
+    data.augument = await getaugument();
 
     if (puuid) {
       data.maestria = await getMaestriaByPuuid(puuid);
@@ -118,16 +128,8 @@ export const faztudo = async (name, tag) => {
       if (summonerId) {
         data.elo = await getEloBySummonerId(summonerId);
       }
-      const hist = await getMatchHistoryByPuuid(puuid);
-
-      if (hist && hist.length > 0) {
-        data.matchDetails = await getMatchDetailsById(hist[0]);
-        data.matchDetails1 = await getMatchDetailsById(hist[1]);
-        data.matchDetails2 = await getMatchDetailsById(hist[2]);
-        data.matchDetails3 = await getMatchDetailsById(hist[3]);
-        data.matchDetails4 = await getMatchDetailsById(hist[4]);
-      }
     }
+    console.log(data);
     return data;
   } catch (error) {
     console.error(error);

@@ -16,3 +16,15 @@ body {
 a {
   text-decoration: none;
 }
+.item-description {
+  display: block; /* Permite que o bloco expanda conforme o conteúdo */
+  max-height: none; /* Remova max-height para não restringir o tamanho */
+  margin: 0; /* Remove margens extras */
+}
+
+/* Se você quiser definir um tamanho padrão */
+.hover-content {
+  padding: 10px; /* Adiciona um pouco de espaçamento interno */
+  border-radius: 5px; /* Bordas arredondadas para um visual mais agradável */
+  transition: height 0.2s ease; /* Suaviza a transição */
+}

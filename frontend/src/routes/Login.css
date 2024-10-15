@@ -153,7 +153,6 @@
 }
 
 .fundo-login {
-  background-image: url(../assets/funfoperfil.png);
   background-size: cover;
   width: 100%;
 }
@@ -165,7 +164,7 @@
   width: 500px; /* Ajuste conforme necessário */
   height: 250px; /* Ajuste conforme necessário */
   border: 2px solid #785a28;
-  background-color: #a3a3a33b;
+
   display: flex;
   align-items: center;
   font-size: 5px;
@@ -202,4 +201,75 @@
 
 .ml-6 {
   margin-left: 1.5rem;
+}
+.collapsible-content {
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  transition: height 0.5s ease, opacity 0.5s ease;
+}
+
+/* Define o estado expandido */
+.collapsible-content.expanded {
+  height: auto;
+  opacity: 1;
+}
+.collapsible-line {
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  transition: height 0.5s ease, opacity 0.5s ease;
+}
+.collapsible-line.expanded {
+  border-bottom: #785a28 2px solid;
+}
+@media (max-width: 480px) {
+  .login {
+  }
+  .label-float {
+    position: relative;
+    padding-top: 13px;
+    display: flex;
+    margin-left: 10px;
+    align-items: center;
+    justify-content: center;
+  }
+  .aba-esquerda {
+    background-color: #fcfcfc2a;
+    width: 300px;
+    height: 624px;
+  }
+  .inpt {
+    padding: 10px;
+  }
+  .fundo-login {
+    background-size: cover;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .criar-conta {
+    color: #a3a3a3;
+
+    font-size: 15px;
+    height: 30px;
+  }
+}
+@media (min-width: 481px) and (max-width: 767px) {
+  .aba-esquerda {
+    background-color: #fcfcfc;
+    width: 336px;
+    height: 600px;
+  }
+  .fundo-login {
+    background-size: cover;
+    width: 100%;
+  }
+  .aba-esquerda {
+    width: 300px;
+    height: 624px;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
 }

@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { VscArrowLeft } from "react-icons/vsc";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { faztudo } from "../services/riot.service";
-
+import { getMatchDetailsById } from "../services/riot.service";
+import { getMatchHistoryByPuuid } from "../services/riot.service";
+import { getSummonerByPuuid } from "../services/riot.service";
+import { getSummonerByNameAndTag } from "../services/riot.service";
 import moldura from "../assets/moldura.png";
 import unranked from "../assets/unranked.png";
 import iron from "../assets/iron.png";
@@ -28,7 +31,7 @@ import { HoverItem } from "../components/HoverItem";
 
 function Perfil() {
   const [datas, setDatas] = useState({});
-  const [matchDetails, setMatchDetails] = useState({});
+  const [historicoCarregado, setHistoricoCarregado] = useState(false); // Novo estado
   const [championData, setChampionData] = useState({});
 
   const [hovver4, sethovver4] = useState(false);
@@ -87,19 +90,45 @@ function Perfil() {
         try {
           const data = await faztudo(name, tag);
           setDatas(data);
-          console.log(data);
 
+          // Busca de campeões
           const championResponse = await fetch(
             "https://ddragon.leagueoflegends.com/cdn/14.17.1/data/en_US/champion.json"
           );
           const championJson = await championResponse.json();
           setChampionData(championJson.data);
 
+          // Busca de ícones de perfil
           const profileIconResponse = await fetch(
             "https://ddragon.leagueoflegends.com/cdn/14.17.1/data/en_US/profileicon.json"
           );
           const profileIconJson = await profileIconResponse.json();
           setProfileIcons(Object.values(profileIconJson.data));
+
+          // Busca de dados do invocador
+          const summonerData = await getSummonerByNameAndTag(name, tag);
+          const puuid = summonerData.puuid;
+
+          // Histórico de partidas
+          const hist = await getMatchHistoryByPuuid(puuid);
+
+          // Obtenção de detalhes de partidas
+          if (hist && hist.length > 0) {
+            data.matchDetails = await Promise.all([
+              getMatchDetailsById(hist[0]),
+              getMatchDetailsById(hist[1]),
+              getMatchDetailsById(hist[2]),
+              getMatchDetailsById(hist[3]),
+              getMatchDetailsById(hist[4]),
+              getMatchDetailsById(hist[5]),
+              getMatchDetailsById(hist[6]),
+              getMatchDetailsById(hist[7]),
+              getMatchDetailsById(hist[8]),
+              getMatchDetailsById(hist[9]),
+            ]);
+            setHistoricoCarregado(true);
+          }
+          setDatas({ ...data, matchDetails: data.matchDetails });
         } catch (error) {
           console.error("Erro ao buscar os dados:", error);
         }
@@ -108,9 +137,10 @@ function Perfil() {
 
     fetchData();
   }, [name, tag]);
+
   const changeName = (queueType) => {
     if (queueType === "CHERRY") {
-      return "Modo de jogo Cherry";
+      return "2v2";
     } else if (queueType === "RANKED_SOLO_5x5") {
       return "Solo/duo";
     } else if (queueType === "RANKED_FLEX_SR") {
@@ -122,23 +152,21 @@ function Perfil() {
   const navigate = useNavigate();
 
   const handleGoToHistorico = () => {
-    navigate("/QueQueBilda/perfil/historico", {
-      state: {
-        name: name,
-        tag: tag,
-        matches: [
-          datas.matchDetails,
-          datas.matchDetails1,
-          datas.matchDetails2,
-          datas.matchDetails3,
-          datas.matchDetails4,
-        ],
-        champ: datas.champ,
-        championData,
-        itens: datas.itens.data,
-        spells: datas.spells.data,
-      },
-    });
+    if (historicoCarregado) {
+      navigate("/QueQueBilda/perfil/historico", {
+        state: {
+          name: name,
+          tag: tag,
+          matches: datas.matchDetails, // Dados completos das partidas
+          augments: datas.augments,
+          champ: datas.champ,
+          championData,
+          itens: datas.itens?.data,
+          spells: datas.spells?.data,
+        },
+      });
+    }
+    console.log(augments);
   };
 
   return (
@@ -150,9 +178,9 @@ function Perfil() {
           <div className="flex justify-between   w-96 ml-64">
             <div>
               <Link
-                to={"/Que-Que-Bilda/perfil"}
+                to={"/QueQueBilda/perfil"}
                 className={`${
-                  location.pathname === "/Que-Que-Bilda/perfil"
+                  location.pathname === "/QueQueBilda/perfil"
                     ? "text-white font-bold border-b-2 border-yellow-500"
                     : "text-gray-300"
                 } hover:text-gray-100`}
@@ -164,12 +192,16 @@ function Perfil() {
             <button
               onClick={handleGoToHistorico}
               className={`${
-                location.pathname === "/Que-Que-Bilda/perfil/historico"
+                location.pathname === "/QueQueBilda/perfil/historico"
                   ? "text-white font-bold border-b-2 border-yellow-500"
                   : "text-gray-300"
               } hover:text-gray-100`}
             >
-              ULTIMA PARTIDA
+              {historicoCarregado ? (
+                <p>HISTÓRICO</p>
+              ) : (
+                ((<p className="loading-spinner"></p>), "CARREGANDO...")
+              )}
             </button>
           </div>
         </div>
@@ -220,7 +252,10 @@ function Perfil() {
                   </div>
                 </HoverItem>
               ) : (
-                <p className="loading-spinner"></p>
+                <div className="relative">
+                  <img className="w-32 " src={unranked} alt="" />
+                  <div className="loading-spinner absolute top-12 right-0 left-0"></div>
+                </div>
               )}
             </div>
             <div>
